@@ -16,39 +16,35 @@ def db_connect():
 """
 def tb_insert_crawling_ranking(item_id, name, price, ranking):
     engine = db_connect()
-
-    query = text("INSERT INTO crawling_ranking VALUES (:val1, :val2, :val3, :val4)")  # colunm = item_id, name, price, ranking
-    
+    query = text("INSERT INTO crawling_ranking(item_id, name, price, ranking) VALUES (:val1, :val2, :val3, :val4)")  # colunm = item_id, name, price, ranking,
     values = {"val1": item_id, "val2": name, "val3": price, "val4": ranking}
     
     with engine.connect() as conn:
         try:
-            
-            conn.execute(query, values)  
+            conn.execute(query, values)
             conn.commit() 
+            print("tb_insert_crawling_ranking : 데이터 삽입성공!")
         except Exception as e:
-            print(f"DB에 넣는거 실패함 ㅜㅜ 수빈에몽 고쳐줘: {e},tb_insert_crawling_ranking")
+            print(f"tb_insert_crawling_ranking : DB에 넣는거 실패함 ㅜㅜ 고쳐라: {e}")
             
 # DB에 데이터 넣는 함수(table = crawling_add_info)
 """   
     DB = musinsa 
-    Table = crawling_add_info
-    colunm = item_id, gender, rating
+    Table = crawling_ranking
+    colunm = gender, rating, img
 """
-def tb_insert_crawling_add_info(item_id, gender, rating):
+def tb_insert_crawling_add_info(item_id, gender, rating, img):
     engine = db_connect()
-    
-    query = text("INSERT INTO crawling_add_info VALUES (:val1, :val2, :val3)")  # colunm = item_id, gender, rating
-    
-    values = {"val1": item_id, "val2": gender, "val3": rating}
+    query = text("UPDATE crawling_ranking SET gender = :val2, rating = :val3, img = :val4 WHERE item_id = :val1")  # colunm = gender, rating,img
+    values = {"val1": item_id, "val2": gender, "val3": rating, "val4" : img}
     
     with engine.connect() as conn:
         try:
             conn.execute(query, values)  
             conn.commit()
-            print("데이터 삽입 성공~~~~!!!!")
+            print("tb_insert_crawling_add_info : 데이터 삽입 성공~~~~!!!!")
         except Exception as e:
-            print(f"DB에 넣는거 실패함 ㅜㅜ 수빈에몽 고쳐줘: {e},tb_insert_crawling_add_info")
+            print(f"tb_insert_crawling_add_info : DB에 넣는거 실패함 ㅜㅜ 일해라 : {e}")
 
 # DB에 데이터 넣는 함수(table = crawling_size)
 """   
@@ -60,12 +56,14 @@ def tb_insert_crawling_size(item_id, height,weight, size):
     engine = db_connect()
     query = text("INSERT INTO crawling_size VALUES (:val1, :val2, :val3, :val4)") # colunm = item_id, height, weight, size
     values = {"val1": item_id, "val2": height, "val3": weight, "val4": size}
+
     with engine.connect() as conn:
         try:
             conn.execute(query, values)  
-            conn.commit() 
+            conn.commit()
+            print("tb_insert_crawling_review : 데이터 삽입 성공~~~~!!!!")
         except Exception as e:
-            print(f"tb_insert_crawling_review : DB에 넣는거 실패함 ㅜㅜ 수빈에몽 고쳐줘: {e}")
+            print(f"tb_insert_crawling_review : DB에 넣는거 실패함 ㅜㅜ 빨리 고쳐라: {e}")
 
 # DB에 데이터 넣는 함수(table = crawling_review)
 """   
@@ -77,18 +75,17 @@ def tb_insert_crawling_review(item_id, review):
     engine = db_connect()
     query = text("INSERT INTO crawling_review VALUES (:val1, :val2)")  # colunm = item_id, review
     values = {"val1": item_id, "val2": review}
+
     with engine.connect() as conn:
         try:
             conn.execute(query, values)  
             conn.commit()
-            print("데이터 삽입 성공~~~~!!!!")
+            print("tb_insert_crawling_review : 데이터 삽입 성공~~~~!!!!")
         except Exception as e:
-            print(f"tb_insert_crawling_review : DB에 넣는거 실패함 ㅜㅜ 수빈에몽 고쳐줘: {e}")
+            print(f"tb_insert_crawling_review : DB에 넣는거 실패함 ㅜㅜ 고쳐줘잉: {e}")
 
-
-
-
-# 모든 데이터 지우는 함수 --> 랭킹은 수시로 바뀌기 때문.
+# delete
+# 모든 데이터 지우는 함수 --> 랭킹은 수시로 바뀌기 때문에 하루에 한번씩 다시 수정하기
 def delete():
     engine = db_connect()
     delete_queries = [
@@ -97,6 +94,7 @@ def delete():
         text("DELETE FROM crawling_add_info"),
         text("DELETE FROM crawling_size")
     ]
+
     with engine.connect() as conn:
         try:
             for query in delete_queries:
@@ -105,13 +103,14 @@ def delete():
             print("모든 테이블 데이터 삭제 완료!")
             
         except Exception as e:
-            print(f"DB에서 삭제 실패함 ㅜㅜ: {e}, delete")
+            print(f"delete : DB에서 삭제 실패함 ㅜㅜ 근데 이게 실패할 수가 있는건가??: {e}")
 
-
-# DB 데이터 불러오는 함수
+# select
+# item_id 불러오기
 def item_id_select():
     engine = db_connect()
     SQL = "SELECT item_id FROM crawling_ranking ORDER BY ranking" 
+
     with engine.connect() as conn:
         df = pd.read_sql(SQL, conn)
     return df
@@ -119,8 +118,16 @@ def item_id_select():
 
 
 if __name__ == "__main__":
-    df_item_id = item_id_select()
 
-    # item_id 값들 출력 (iterrows 사용)
-    for index, row in df_item_id.iterrows():
-        print(row["item_id"])
+    # tb_insert_crawling_ranking(123,"오버핏 맨투맨","123,123원",23)
+    # tb_insert_crawling_add_info(123,"공용",4.6)
+    # tb_insert_crawling_size(123,"180cm","76kg","XL")
+    # tb_insert_crawling_review(123,"옷이 너무 구려요")
+
+    #delete()
+
+    # df_item_id = item_id_select()
+    # for index, row in df_item_id.iterrows():
+    #     print(row["item_id"])
+
+    pass
