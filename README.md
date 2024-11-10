@@ -18,7 +18,14 @@
    1-4. 마찬가지로 상세 리뷰 페이지에서 리뷰크롤링(review)
    (url = https://www.musinsa.com/review/goods/item_id)
 
-3. 크롤링한 데이터 DataBase에 넣기
+2. DB 구성
+   
+   2-1. Table : crawling_ranking(column : item_id, name, price, brand, ranking, rating, gender, img)
+   
+   2-2. Table : crawling_size(column : item_id, height, weight, size)
+   
+   2-3. table : crawling_review(column : item_id, review)
+   
 4. 데이터 모델링
 5. 서비스 만들기
 6. AWS배포
