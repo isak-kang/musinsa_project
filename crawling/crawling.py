@@ -46,10 +46,12 @@ def crawling_ranking():
             if len(item_ids) >= 100:
                 break  
             try:
-                # item_id, name, price, ranking
+                # item_id, name, price, ranking, brand
                 name = div.find('p', class_='text-body_13px_reg line-clamp-2 break-all whitespace-break-spaces text-black font-pretendard').get_text(strip=True)
                 ranking = div.find('span', class_='text-etc_11px_semibold text-black font-pretendard').get_text(strip=True)
                 price = div.find('span', class_='text-body_13px_semi sc-1m4cyao-12 fYDlTs text-black font-pretendard').get_text(strip=True)
+                brand = div.find('p', class_='text-etc_11px_semibold line-clamp-1 break-all whitespace-break-spaces text-black font-pretendard').get_text(strip=True)
+                
                 
                 if div and div.has_attr('data-item-id'):
 
@@ -58,10 +60,10 @@ def crawling_ranking():
                         item_ids.append(item_id)
                 
                 
-                print("data-item-id:", item_id, "name:", name, "ranking:", ranking, "price:", price)
+                print("data-item-id:", item_id, "name:", name, "ranking:", ranking, "price:", price, "brand:", brand)
                 
                 # DataBase에 추가하기
-                tb_insert_crawling_ranking(item_id, name, price, ranking)
+                tb_insert_crawling_ranking(item_id, name, price, ranking,brand)
 
             except AttributeError as e:
                 print(f"이거 외않되.. 수빈에몽 도와줭.. : {e}")

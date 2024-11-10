@@ -1,11 +1,60 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>top100</title>
+    <title>검색 결과</title>
+    <link href="../static/style.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .rank-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #ffffff;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <img src="https://image.msscdn.net/thumbnails/images/goods_img/20190927/1168906/1168906_17224121763738_500.jpg?w=780">
+    <div style="background-color: #000000; padding-left: 16px; /* 오른쪽으로 이동하도록 여백 추가 */">
+        <img src="../static/images/musinsa.png" id="musinsa">
+        <p style="text-align: center; color: white;">무신사 리뷰 긍부정분석 및 체형에 맞는 사이즈 추천서비스</p>
+    </div>
+    <div class="container">
+        {% if context %}
+        <div class="row">
+            {% for item in context %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem; position: relative;">
+                    <div class="rank-badge">{{ item.ranking }}</div>
+                    
+                    <!-- 이미지에 링크 추가 -->
+                    <a href="item_detail/{{ item.item_id }}" style="color: #000;">
+                        <img src="{{ item.img }}" class="card-img-top" alt="{{ item.name }}">
+                    </a>
+                    
+                    <div class="card-body">
+                        <p class="card-text">{{ item.brand }}</p>
+                        <a href="item_detail/{{ item.item_id }}" style="color: #000;">
+                            <h5 class="card-title">{{ item.name }}</h5>
+                        </a>
+                        <p class="card-text">
+                            가격: {{ item.price }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>결과가 없습니다.</p>
+        {% endif %}
+    </div>
 </body>
 </html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ item.name }} - 상세 정보</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/style.css" rel="stylesheet">
+    <style>
+        .container {
+            display: flex; /* Flexbox 활성화 */
+            align-items: center; /* 세로 중앙 정렬 */
+            justify-content: flex-start; /* 왼쪽 정렬 */
+        }
+        .container img {
+            width: 100%; 
+            max-width: 400px;
+            margin-right: 20px; /* 이미지와 텍스트 사이에 간격 추가 */
+        }
+        .details {
+            color: #333;
+        }
+        
+    </style>
+</head>
+<body>
+    <div style='background-color: #000000'>
+        <img src="../static/images/musinsa.png" id="musinsa">
+        <p style="text-align: center; color: white;">무신사 리뷰 긍부정분석 및 체형에 맞는 사이즈 추천서비스</p>
+    </div>
+    <div class="container">
+        <img src="{{ item.img }}" alt="{{ item.name }}">
+        <div class="details">
+            <p>상품 이름 : {{item.name}}</p>
+            <p>브랜드: {{ item.brand }}</p>
+            <p>가격: {{ item.price }}</p>
+            <p>성별: {{ item.gender }}</p>
+            <p><span style="color: rgba(255, 255, 0, 0.815);">★</span>: {{ item.rating }}</p>
+            
+        </div>
+    </div>
+</body>
+</html>
