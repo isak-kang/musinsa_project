@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 import pymysql
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine("mysql+pymysql://root:1234@127.0.0.1/musinsa")
+engine = create_engine("mysql+pymysql://mini:mini1234@127.0.0.1/musinsa")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # insert
@@ -118,6 +118,15 @@ def get_item():
         session.close()
     return items
 
+def get_review():
+    session = SessionLocal()
+    try:
+        query = text("SELECT item_id, review FROM crawling_review" )
+        result = session.execute(query)
+        items = [{"item_id": row[0], "review": row[1]} for row in result]
+    finally:
+        session.close()
+    return items
 
 if __name__ == "__main__":
 
@@ -131,5 +140,5 @@ if __name__ == "__main__":
     # df_item_id = item_id_select()
     # for index, row in df_item_id.iterrows():
     #     print(row["item_id"])
-
+    print(get_review())
     pass

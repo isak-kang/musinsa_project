@@ -148,7 +148,7 @@ def crawling_size():
                         weight = elements[2].get_text(strip=True)
                         size = elements[4].get_text(strip=True)
 
-                        tb_insert_crawling_size(row['item_id'], height,weight, size, gender)
+                        tb_insert_crawling_size(row['item_id'],gender,height,weight, size)
                         
                         print(row['item_id'],gender, height, weight, size)
 
