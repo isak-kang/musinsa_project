@@ -120,7 +120,6 @@ def crawling_size():
 
     SCROLL_PAUSE_TIME = 0.5 
     last_height = driver.execute_script("return document.body.scrollHeight")
-    item_ids = [3075261,996235,1209633,1201036,996184,1388778,3134802,1628947,1129743,1628945,983821,2086654,1387529,1446292,1333644]
     for index, row in df_item_id.iterrows():
         url = f"https://www.musinsa.com/review/goods/{row['item_id']}"
         driver.get(url)
