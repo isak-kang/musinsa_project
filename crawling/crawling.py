@@ -120,7 +120,7 @@ def crawling_size():
 
     SCROLL_PAUSE_TIME = 0.5 
     last_height = driver.execute_script("return document.body.scrollHeight")
-
+    item_ids = [3075261,996235,1209633,1201036,996184,1388778,3134802,1628947,1129743,1628945,983821,2086654,1387529,1446292,1333644]
     for index, row in df_item_id.iterrows():
         url = f"https://www.musinsa.com/review/goods/{row['item_id']}"
         driver.get(url)
@@ -149,7 +149,7 @@ def crawling_size():
                         weight = elements[2].get_text(strip=True)
                         size = elements[4].get_text(strip=True)
 
-                        tb_insert_crawling_size(row['item_id'], height,weight, size)
+                        tb_insert_crawling_size(row['item_id'], height,weight, size, gender)
                         
                         print(row['item_id'],gender, height, weight, size)
 
@@ -208,8 +208,9 @@ def crawling_review():
 
 if __name__ == "__main__":
     # delete()
-    crawling_ranking()
-    crawling_add_info()
+    # crawling_ranking()
+    # crawling_add_info()
     # crawling_size()
     # crawling_review()
     pass
+
