@@ -79,6 +79,24 @@ def tb_insert_crawling_review(item_id, review):
         except Exception as e:
             print(f"tb_insert_crawling_review : DB에 넣는거 실패함 ㅜㅜ 고쳐줘잉: {e}")
 
+#리뷰 분석 데이터 넣기
+"""   
+    DB = musinsa 
+    Table = crawling_ranking
+    colunm = item_id, positive_ratio,negative_ratio
+"""
+def tb_insert_review_analysis(item_id,positive_ratio, negative_ratio):
+    query = text("UPDATE crawling_ranking SET positive_ratio = :val2, negative_ratio = :val3 WHERE item_id = :val1")  # colunm = item_id,positive_ratio, negative_ratio
+    values = {"val1": item_id, "val2": positive_ratio, "val3": negative_ratio}
+    
+    with engine.connect() as conn:
+        try:
+            conn.execute(query, values)  
+            conn.commit()
+            print("tb_insert_crawling_add_info : 데이터 삽입 성공~~~~!!!!")
+        except Exception as e:
+            print(f"tb_insert_crawling_add_info : DB에 넣는거 실패함 ㅜㅜ 일해라 : {e}")
+
 # delete
 # 모든 데이터 지우는 함수 --> 랭킹은 수시로 바뀌기 때문에 하루에 한번씩 다시 수정하기
 def delete():
@@ -111,9 +129,9 @@ def item_id_select():
 def get_item():
     session = SessionLocal()
     try:
-        query = text("SELECT item_id, name, price, img, brand, ranking,rating,gender FROM crawling_ranking order by ranking" )
+        query = text("SELECT item_id, name, price, img, brand, ranking,rating,gender,positive_ratio,negative_ratio FROM crawling_ranking order by ranking" )
         result = session.execute(query)
-        items = [{"item_id": row[0], "name": row[1], "price": row[2], "img": row[3], "brand" : row[4], "ranking" : row[5], "rating" : row[6], "gender" : row[7]} for row in result]
+        items = [{"item_id": row[0], "name": row[1], "price": row[2], "img": row[3], "brand" : row[4], "ranking" : row[5], "rating" : row[6], "gender" : row[7], "positive_ratio" : row[8], "negative_ratio" : row[9]} for row in result]
     finally:
         session.close()
     return items
@@ -121,12 +139,14 @@ def get_item():
 def get_review():
     session = SessionLocal()
     try:
-        query = text("SELECT item_id, review FROM crawling_review" )
+        query = text("SELECT item_id, review FROM crawling_review")
         result = session.execute(query)
-        items = [{"item_id": row[0], "review": row[1]} for row in result]
+        # DataFrame으로 변환
+        df = pd.DataFrame(result, columns=["item_id", "review"])
     finally:
         session.close()
-    return items
+    
+    return df
 
 if __name__ == "__main__":
 
@@ -140,5 +160,5 @@ if __name__ == "__main__":
     # df_item_id = item_id_select()
     # for index, row in df_item_id.iterrows():
     #     print(row["item_id"])
-    print(get_review())
+    # print(get_review())
     pass

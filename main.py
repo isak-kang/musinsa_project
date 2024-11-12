@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from database.DB import get_item
+from utils.graph import graph_url
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -25,6 +26,8 @@ async def read_item(request: Request, item_id: int):
     items = get_item()  # DB에서 가져온 아이템 목록
     item = next((item for item in items if item["item_id"] == item_id), None)
     if item:
-        return templates.TemplateResponse("item_detail.html", {"request": request, "item": item})
+        graph_url_value = graph_url(item["positive_ratio"],item["negative_ratio"])
+        return templates.TemplateResponse("item_detail.html", {"request": request, "item": item, "graph_url": graph_url_value})
     else:
         return HTMLResponse("Item not found", status_code=404)
+    

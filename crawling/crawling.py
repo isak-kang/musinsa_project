@@ -1,5 +1,3 @@
-import sys
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -13,6 +11,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 
 # 모듈 경로 설정.... 이렇게 해줘야 다른 디랙토리에 있는 모듈 가져다 쓸 수 있음... !!
+import sys
+import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from database.DB import tb_insert_crawling_add_info, tb_insert_crawling_ranking, tb_insert_crawling_review,delete,item_id_select,tb_insert_crawling_size
 

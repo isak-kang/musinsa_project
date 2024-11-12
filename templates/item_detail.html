@@ -5,39 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ item.name }} - 상세 정보</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/style.css" rel="stylesheet">
     <style>
-        .container {
-            display: flex; /* Flexbox 활성화 */
-            align-items: center; /* 세로 중앙 정렬 */
-            justify-content: flex-start; /* 왼쪽 정렬 */
-        }
-        .container img {
-            width: 100%; 
-            max-width: 400px;
-            margin-right: 20px; /* 이미지와 텍스트 사이에 간격 추가 */
-        }
-        .details {
+        /* 전체 배경과 기본 텍스트 설정 */
+        #musinsa {
+            display: block;
+            width: 250px;  
+            height: 70px;  
+            margin: 0 auto;
+}
+        body {
+            background-color: #f2f2f2;
             color: #333;
+            font-family: Arial, sans-serif;
         }
-        
+        /* 제품 이미지 컨테이너 */
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .image-container img {
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #333;
+            border-radius: 8px;
+        }
+        /* 제품 상세 정보 카드 스타일 */
+        .details-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .details-card p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+        /* 평점 아이콘 스타일 */
+        .details-card .rating {
+            color: #888;
+        }
+        /* 그래프 이미지 */
+        .graph-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .graph-container img {
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        /* 버튼 스타일 */
+        .buy-button {
+            display: block;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .buy-button:hover {
+            background-color: #555;
+        }
     </style>
 </head>
 <body>
-<div style="background-color: #000000; padding-bottom: 20pt; margin-bottom: 20pt;">
-    <img src="../static/images/musinsa.png" id="musinsa">
-    <p style="text-align: center; color: white;">무신사 리뷰 긍부정분석 및 체형에 맞는 사이즈 추천서비스</p>
-</div>
-    <div class="container">
-        <img src="{{ item.img }}" alt="{{ item.name }}">
-        <div class="details">
-            <p>상품 이름 : {{item.name}}</p>
-            <p>브랜드: {{ item.brand }}</p>
-            <p>가격: {{ item.price }}</p>
-            <p>성별: {{ item.gender }}</p>
-            <p><span style="color: rgba(255, 255, 0, 0.815);">★</span>: {{ item.rating }}</p>
-            
-        </div>
+
+    <div style="background-color: #000000; padding-left: 16px; padding-bottom: 20pt;margin-bottom: 20pt;">
+        <img src="../static/images/musinsa.png" id="musinsa">
+        <p style="text-align: center; color: white;">무신사 리뷰 긍부정분석 및 체형에 맞는 사이즈 추천서비스</p>
     </div>
+
+    <!-- 제품 이미지 -->
+    <div class="image-container">
+        <img src="{{ item.img }}" alt="{{ item.name }}">
+    </div>
+
+    <!-- 제품 상세 정보 -->
+    <div class="details-card">
+        <p><strong>브랜드:</strong> {{ item.brand }}</p>
+        <p><strong>상품 이름:</strong> {{ item.name }}</p>
+        <p><strong>가격:</strong> {{ item.price }}</p>
+        <p><strong>성별:</strong> {{ item.gender }}</p>
+        <p><strong>평점:</strong> <span class="rating">★</span> {{ item.rating }}</p>
+    </div>
+
+    <!-- 그래프 이미지 -->
+    <div class="graph-container">
+        <img src="data:image/png;base64,{{ graph_url }}" alt="Comparison Pie Chart">
+    </div>
+
+    <!-- 구매 버튼 -->
+    <div class="details-card text-center">
+        <a href="https://www.musinsa.com/products/{{ item.item_id }}" class="buy-button">사러가기</a>
+    </div>
+
 </body>
 </html>
