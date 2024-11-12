@@ -28,7 +28,7 @@ chrome_options.add_argument("--log-level=3")
 # 랭킹 탑 100에 있는 이름, 랭킹, 가격 그리고 나중에 상세페이지 들어갈 때 쓰일 고유ID가져오기!!
 def crawling_ranking():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    url = "https://www.musinsa.com/main/musinsa/ranking?storeCode=musinsa&sectionId=199&categoryCode=000&period=MONTHLY"
+    url = "https://www.musinsa.com/main/musinsa/ranking?storeCode=musinsa&sectionId=200&categoryCode=001000&period=MONTHLY"
     driver.get(url)
 
     SCROLL_PAUSE_TIME = 3  # 로딩 대기시간
