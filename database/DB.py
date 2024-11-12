@@ -47,11 +47,11 @@ def tb_insert_crawling_add_info(item_id, gender, rating, img):
 """   
     DB = musinsa 
     Table = crawling_size
-    colunm = item_id, height, weight, size
+    colunm = item_id, height, weight, size, gender
 """
-def tb_insert_crawling_size(item_id, height,weight, size):
-    query = text("INSERT INTO crawling_size VALUES (:val1, :val2, :val3, :val4)") # colunm = item_id, height, weight, size
-    values = {"val1": item_id, "val2": height, "val3": weight, "val4": size}
+def tb_insert_crawling_size(item_id, height,weight, size, gender):
+    query = text("INSERT INTO crawling_size VALUES (:val1, :val2, :val3, :val4, :val5)") # colunm = item_id, height, weight, size, gender
+    values = {"val1": item_id, "val2": height, "val3": weight, "val4": size, "val5": gender}
 
     with engine.connect() as conn:
         try:

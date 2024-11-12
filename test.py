@@ -5,7 +5,6 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 import time
 import pandas as pd
@@ -25,13 +24,14 @@ chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64
 chrome_options.add_argument("--log-level=3")
 
 
+
 def crawling_size():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     df_item_id = item_id_select()
 
     SCROLL_PAUSE_TIME = 0.5 
     last_height = driver.execute_script("return document.body.scrollHeight")
-    item_ids = [1265162,3245031,2995119,2775713,1410570,2775710,3640947,1121465,3293698,1951473,3539176,997738,3245030,2775711,3640949,1552454,1951474,4053271,997783,1951470,1951471,1275946,2775657,2177716,1275946,2775657,2177716,4053265,1121471,3539169,2775660,997781,3293737,1276101,3293747,2775687,3245025,3802507,1967048]
+    item_ids = []
     for item_id in item_ids:
         url = f"https://www.musinsa.com/review/goods/{item_id}"
         driver.get(url)
@@ -79,3 +79,4 @@ def crawling_size():
     driver.quit()
 
 crawling_size()
+
