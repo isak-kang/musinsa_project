@@ -85,7 +85,6 @@ def delete():
     delete_queries = [
         text("DELETE FROM crawling_ranking"),
         text("DELETE FROM crawling_review"),
-        text("DELETE FROM crawling_add_info"),
         text("DELETE FROM crawling_size")
     ]
 
