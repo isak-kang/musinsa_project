@@ -6,19 +6,20 @@
     <title>{{ item.name }} - 상세 정보</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* 전체 배경과 기본 텍스트 설정 */
+        /* 무신사 로고 스타일 */
         #musinsa {
             display: block;
             width: 250px;  
             height: 70px;  
             margin: 0 auto;
-}
+        }
+        /* 기본 텍스트와 배경 */
         body {
             background-color: #f2f2f2;
             color: #333;
             font-family: Arial, sans-serif;
         }
-        /* 제품 이미지 컨테이너 */
+        /* 제품 이미지 */
         .image-container {
             display: flex;
             justify-content: center;
@@ -30,7 +31,7 @@
             border: 2px solid #333;
             border-radius: 8px;
         }
-        /* 제품 상세 정보 카드 스타일 */
+        /* 상세 정보 카드 */
         .details-card {
             background-color: #fff;
             border: 1px solid #ddd;
@@ -46,7 +47,7 @@
             line-height: 1.6;
             color: #555;
         }
-        /* 평점 아이콘 스타일 */
+        /* 평점 */
         .details-card .rating {
             color: #888;
         }
@@ -61,7 +62,7 @@
             border: 1px solid #ddd;
             border-radius: 8px;
         }
-        /* 버튼 스타일 */
+        /* 구매 버튼 */
         .buy-button {
             display: block;
             background-color: #333;
@@ -80,8 +81,11 @@
 </head>
 <body>
 
-    <div style="background-color: #000000; padding-left: 16px; padding-bottom: 20pt;margin-bottom: 20pt;">
-        <img src="../static/images/musinsa.png" id="musinsa">
+    <!-- 상단 배너 -->
+    <div style="background-color: #000000; padding-left: 16px; padding-bottom: 20pt; margin-bottom: 20pt;">
+        <a href="/">
+            <img src="../static/images/musinsa.png" id="musinsa">
+        </a>
         <p style="text-align: center; color: white;">무신사 리뷰 긍부정분석 및 체형에 맞는 사이즈 추천서비스</p>
     </div>
 
@@ -99,6 +103,28 @@
         <p><strong>평점:</strong> <span class="rating">★</span> {{ item.rating }}</p>
     </div>
 
+        <!-- 사이즈 예측 폼 -->
+    <form method="POST" action="/item_detail/{{ item.item_id }}" class = "details-card" style="max-width: 400px; margin: 20px auto;">
+        <div class="mb-3">
+            <div class="input-group">
+                <input type="text" class="form-control" id="input-height" name="input_height" placeholder="키" required>
+                <input type="text" class="form-control" id="input-weight" name="input_weight" placeholder="몸무게" required>
+                <input type="text" class="form-control" id="input-gender" name="input_gender" placeholder="성별" required>
+            </div>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary" type="submit" style="background-color: black; color: white; border: 2px solid black;">입력</button>
+        </div>
+    </form>
+
+    <!-- 예측된 사이즈 결과 -->
+    {% if size %}
+    <div class="details-card text-center" style="margin-top: 20px;">
+        <h2 style="color: #333; font-weight: bold;">예측된 사이즈: {{ size }}</h2>
+        <p style="color: #555; font-size: 1em;">입력하신 키와 체중에 맞춰 추천된 사이즈입니다.</p>
+    </div>
+    {% endif %}
+
     <!-- 그래프 이미지 -->
     <div class="graph-container">
         <img src="data:image/png;base64,{{ graph_url }}" alt="Comparison Pie Chart">
@@ -106,8 +132,11 @@
 
     <!-- 구매 버튼 -->
     <div class="details-card text-center">
-        <a href="https://www.musinsa.com/products/{{ item.item_id }}" class="buy-button">사러가기</a>
+        <a href="https://www.musinsa.com/products/{{ item.item_id }}" class="buy-button" target="_blank">사러가기</a>
     </div>
+
+
+
 
 </body>
 </html>

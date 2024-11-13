@@ -15,5 +15,5 @@ crawling_review() # 리뷰 크롤링
 review_analysis()
 
 # 사이즈 추천
-
 # redicted_size = predict_size(height, weight, gender)
+

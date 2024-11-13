@@ -11,7 +11,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 """   
     DB = musinsa 
     Table = crawling_ranking
-    colunm = item_id, name, price, ranking,brand
+    colunm = item_id, name, price, ranking, brand
 """
 def tb_insert_crawling_ranking(item_id, name, price, ranking, brand):
     query = text("INSERT INTO crawling_ranking(item_id, name, price, ranking,brand) VALUES (:val1, :val2, :val3, :val4, :val5)")  # colunm = item_id, name, price, ranking, brand
@@ -24,7 +24,8 @@ def tb_insert_crawling_ranking(item_id, name, price, ranking, brand):
             print("tb_insert_crawling_ranking : 데이터 삽입성공!")
         except Exception as e:
             print(f"tb_insert_crawling_ranking : DB에 넣는거 실패함 ㅜㅜ 고쳐라: {e}")
-            
+
+#update
 # DB update 함수(table = crawling_ranking)
 """   
     DB = musinsa 
@@ -97,6 +98,7 @@ def tb_insert_review_analysis(item_id,positive_ratio, negative_ratio):
         except Exception as e:
             print(f"tb_insert_crawling_add_info : DB에 넣는거 실패함 ㅜㅜ 일해라 : {e}")
 
+
 # delete
 # 모든 데이터 지우는 함수 --> 랭킹은 수시로 바뀌기 때문에 하루에 한번씩 다시 수정하기
 def delete():
@@ -115,6 +117,7 @@ def delete():
             
         except Exception as e:
             print(f"delete : DB에서 삭제 실패함 ㅜㅜ 근데 이게 실패할 수가 있는건가??: {e}")
+
 
 # select
 # item_id 불러오기

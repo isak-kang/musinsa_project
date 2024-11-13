@@ -35,7 +35,7 @@ def crawling_ranking():
     item_ids = []  # 리스트로 변경하여 순서 유지 --> 없으면 정보를 뒤죽박죽 가져옴.
     last_height = driver.execute_script("return document.body.scrollHeight")
 
-    # 랭킹 탑100에 대한 정보 수집 (100개 수집 시 종료)
+    # 랭킹 탑100
     while True:
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
@@ -46,7 +46,6 @@ def crawling_ranking():
             if len(item_ids) >= 100:
                 break  
             try:
-                # item_id, name, price, ranking, brand
                 name = div.find('p', class_='text-body_13px_reg line-clamp-2 break-all whitespace-break-spaces text-black font-pretendard').get_text(strip=True)
                 ranking = div.find('span', class_='text-etc_11px_semibold text-black font-pretendard').get_text(strip=True)
                 price = div.find('span', class_='text-body_13px_semi sc-1m4cyao-12 fYDlTs text-black font-pretendard').get_text(strip=True)
@@ -68,7 +67,7 @@ def crawling_ranking():
             except AttributeError as e:
                 print(f"이거 외않되.. 수빈에몽 도와줭.. : {e}")
 
-        # 100개 이상 수집했으면 반복 종료
+        
         if len(item_ids) >= 100:
             break
 
