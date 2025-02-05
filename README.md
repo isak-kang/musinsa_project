@@ -31,16 +31,16 @@
 
 # 크롤링
 
-![alt text](image.png)<br>
+![alt text](./img/image.png)<br>
 랭킹 메인 페이지 : item_id, Name, Price, Ranking, Brand, Img_url 데이터 수집
 <br>
 <br>
-![alt text](image-1.png)<br>
+![alt text](./img/image-1.png)<br>
 메인페이지 에서 수집한 item_id를 통해 상세 상품 페이지로 이동<br>
 상품 상세 페이지 : Gender, Ranking 데이터 수집
 <br>
 <br>
-![alt text](image-2.png)<br>
+![alt text](./img/image-2.png)<br>
 마찬가지로 Item_id를 통해 상세 리뷰 페이지로 이동<br>
 상품 리뷰 페이지 : Gender, Height, Weight, Size, Review 데이터 수집
 
@@ -61,19 +61,19 @@
 4.긍부정 분석<br>
 
 ### 정규 표현식
-![alt text](image-4.png)<br>
+![alt text](./img/image-4.png)<br>
 
 ### 자연어 처리
-![alt text](image-5.png)<br>
+![alt text](./img/image-5.png)<br>
 
 ### 정수 인코딩
-![alt text](image-6.png)<br>
+![alt text](./img/image-6.png)<br>
 
 ### 모델 학습
-![alt text](image-7.png)<br>
+![alt text](./img/image-7.png)<br>
 
 ### 긍부정 분석 (결과)
-![alt text](image-8.png)<br>
+![alt text](./img/image-8.png)<br>
 
 
 </div>
@@ -90,16 +90,16 @@
 - XGBOOST<br>
 
 ### 사용 데이터
-![alt text](image-9.png)<br>
+![alt text](./img/image-9.png)<br>
 
 ### 전처리
-![alt text](image-10.png)<br>
+![alt text](./img/image-10.png)<br>
 
 ### 사용한 모델
-![alt text](image-11.png)<br>
+![alt text](./img/image-11.png)<br>
 
 ### XGBOOST
-![alt text](image-12.png)<br>
+![alt text](./img/image-12.png)<br>
 
 </div>
 
@@ -108,18 +108,18 @@
 # 서비스
 
 ### main
-![alt text](image-13.png)<br>
+![alt text](./img/image-13.png)<br>
 메인 홈페이지입니다.
 
 ### Ranking
-![alt text](image-14.png)<br>
+![alt text](./img/image-14.png)<br>
 무신사 랭킹 100의 상품들의 정보가 있습니다.
 반응형으로 만들었습니다.
 
 ### Product(Detail) 
-![alt text](image-15.png)<br>
+![alt text](./img/image-15.png)<br>
 
-![alt text](image-16.png)<br>
+![alt text](./img/image-16.png)<br>
 상품의 상세 정보들이 있습니다.<br>
 브랜드, 상품명, 가격, 성별, 평점<br>
 사이즈 예측<br>
