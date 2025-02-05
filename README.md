@@ -46,6 +46,14 @@
 
 </div>
 
+<div>
+
+# DB
+![alt text](./img/image17.png)
+
+</div>
+
+
 
 <div>
 
@@ -117,7 +125,7 @@
 반응형으로 만들었습니다.
 
 ### Product(Detail) 
-![alt text](./img/image-15.png)<br>
+![alt text](./img/image-15.png)
 
 ![alt text](./img/image-16.png)<br>
 상품의 상세 정보들이 있습니다.<br>
@@ -126,4 +134,13 @@
 긍부정 분석결과<br>
 사러가기버튼<br> 
 
+</div>
+
+<div>
+
+# 배포
+![alt text](./img/image18.png)<br>
+<br>
+EC2 로 배포 후 <br>
+Nginx-Fastapi으로 웹 배포.
 </div>
