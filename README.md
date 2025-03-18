@@ -12,7 +12,11 @@
 3.클라우드서버구축및배포(WEB, DB 서버)<br>
 4.무신사에서데이터크롤링<br>
 5.분석모델및추천모델적용<br>
-  
+
+### 사용기술
+Python, FastAPI, HTML(BootStrap), ,MySQL, Nginx, Selenium, AWS
+EC2
+
 </div>
 
 
