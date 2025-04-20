@@ -1,23 +1,4 @@
-<div>
 
-### 맡은역할 (개발기여도: 50 %)
-
-웹개발, DB 구축, 서버구축, 크롤링,깃관리<br>
-
-
-### 기여한일
-
-1.반응형웹사이트개발(상품Top 100, 상품상세페이지)<br>
-2.DB(MySQL) 구축및데이터적재, 변환, 추출<br>
-3.클라우드서버구축및배포(WEB, DB 서버)<br>
-4.무신사에서데이터크롤링<br>
-5.분석모델및추천모델적용<br>
-
-### 사용기술
-Python, FastAPI, HTML(BootStrap), ,MySQL, Nginx, Selenium, AWS
-EC2
-
-</div>
 
 
 
@@ -37,14 +18,17 @@ EC2
 <div>
 
 # 각자 맡은 역할
-강이삭 : 크롤링, 백엔드, 프론트엔드, AWS 서버구축, DB 서버구축, 깃관리<br>
+강이삭 : 크롤링, 웹개발, 서버, db구축<br>
 장은별 : 리뷰 감성분석 모델링<br>
 정수빈 : 크롤링, 사이즈 추천 모델링
 
 </div>
 <br>
-<br>
-
+<div>
+### 사용기술
+Python, FastAPI, HTML(BootStrap), ,MySQL, Nginx, Selenium, AWS
+EC2
+</div>
 
 <div>
 
