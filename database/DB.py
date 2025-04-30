@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 import pymysql
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine("mysql+pymysql://root:1234@127.0.0.1/musinsa")
+engine = create_engine("mysql+pymysql://mini:mini1234@127.0.0.1/musinsa")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # insert
@@ -11,7 +11,7 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 """   
     DB = musinsa 
     Table = crawling_ranking
-    colunm = item_id, name, price, ranking,brand
+    colunm = item_id, name, price, ranking, brand
 """
 def tb_insert_crawling_ranking(item_id, name, price, ranking, brand):
     query = text("INSERT INTO crawling_ranking(item_id, name, price, ranking,brand) VALUES (:val1, :val2, :val3, :val4, :val5)")  # colunm = item_id, name, price, ranking, brand
@@ -24,7 +24,8 @@ def tb_insert_crawling_ranking(item_id, name, price, ranking, brand):
             print("tb_insert_crawling_ranking : 데이터 삽입성공!")
         except Exception as e:
             print(f"tb_insert_crawling_ranking : DB에 넣는거 실패함 ㅜㅜ 고쳐라: {e}")
-            
+
+#update
 # DB update 함수(table = crawling_ranking)
 """   
     DB = musinsa 
@@ -47,11 +48,11 @@ def tb_insert_crawling_add_info(item_id, gender, rating, img):
 """   
     DB = musinsa 
     Table = crawling_size
-    colunm = item_id, height, weight, size
+    colunm = item_id, height, weight, size, gender
 """
-def tb_insert_crawling_size(item_id, height,weight, size):
-    query = text("INSERT INTO crawling_size VALUES (:val1, :val2, :val3, :val4)") # colunm = item_id, height, weight, size
-    values = {"val1": item_id, "val2": height, "val3": weight, "val4": size}
+def tb_insert_crawling_size(item_id, height,weight, size, gender):
+    query = text("INSERT INTO crawling_size VALUES (:val1, :val2, :val3, :val4, :val5)") # colunm = item_id, height, weight, size, gender
+    values = {"val1": item_id, "val2": height, "val3": weight, "val4": size, "val5": gender}
 
     with engine.connect() as conn:
         try:
@@ -79,13 +80,31 @@ def tb_insert_crawling_review(item_id, review):
         except Exception as e:
             print(f"tb_insert_crawling_review : DB에 넣는거 실패함 ㅜㅜ 고쳐줘잉: {e}")
 
+#리뷰 분석 데이터 넣기
+"""   
+    DB = musinsa 
+    Table = crawling_ranking
+    colunm = item_id, positive_ratio,negative_ratio
+"""
+def tb_insert_review_analysis(item_id,positive_ratio, negative_ratio):
+    query = text("UPDATE crawling_ranking SET positive_ratio = :val2, negative_ratio = :val3 WHERE item_id = :val1")  # colunm = item_id,positive_ratio, negative_ratio
+    values = {"val1": item_id, "val2": positive_ratio, "val3": negative_ratio}
+    
+    with engine.connect() as conn:
+        try:
+            conn.execute(query, values)  
+            conn.commit()
+            print("tb_insert_crawling_add_info : 데이터 삽입 성공~~~~!!!!")
+        except Exception as e:
+            print(f"tb_insert_crawling_add_info : DB에 넣는거 실패함 ㅜㅜ 일해라 : {e}")
+
+
 # delete
 # 모든 데이터 지우는 함수 --> 랭킹은 수시로 바뀌기 때문에 하루에 한번씩 다시 수정하기
 def delete():
     delete_queries = [
         text("DELETE FROM crawling_ranking"),
         text("DELETE FROM crawling_review"),
-        text("DELETE FROM crawling_add_info"),
         text("DELETE FROM crawling_size")
     ]
 
@@ -98,6 +117,7 @@ def delete():
             
         except Exception as e:
             print(f"delete : DB에서 삭제 실패함 ㅜㅜ 근데 이게 실패할 수가 있는건가??: {e}")
+
 
 # select
 # item_id 불러오기
@@ -112,13 +132,24 @@ def item_id_select():
 def get_item():
     session = SessionLocal()
     try:
-        query = text("SELECT item_id, name, price, img, brand, ranking,rating,gender FROM crawling_ranking order by ranking" )
+        query = text("SELECT item_id, name, price, img, brand, ranking,rating,gender,positive_ratio,negative_ratio FROM crawling_ranking order by ranking" )
         result = session.execute(query)
-        items = [{"item_id": row[0], "name": row[1], "price": row[2], "img": row[3], "brand" : row[4], "ranking" : row[5], "rating" : row[6], "gender" : row[7]} for row in result]
+        items = [{"item_id": row[0], "name": row[1], "price": row[2], "img": row[3], "brand" : row[4], "ranking" : row[5], "rating" : row[6], "gender" : row[7], "positive_ratio" : row[8], "negative_ratio" : row[9]} for row in result]
     finally:
         session.close()
     return items
 
+def get_review():
+    session = SessionLocal()
+    try:
+        query = text("SELECT item_id, review FROM crawling_review")
+        result = session.execute(query)
+        # DataFrame으로 변환
+        df = pd.DataFrame(result, columns=["item_id", "review"])
+    finally:
+        session.close()
+    
+    return df
 
 if __name__ == "__main__":
 
@@ -132,5 +163,5 @@ if __name__ == "__main__":
     # df_item_id = item_id_select()
     # for index, row in df_item_id.iterrows():
     #     print(row["item_id"])
-
+    # print(get_review())
     pass

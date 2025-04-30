@@ -1,5 +1,3 @@
-import sys
-import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
@@ -13,6 +11,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support import expected_conditions as EC
 
 # 모듈 경로 설정.... 이렇게 해줘야 다른 디랙토리에 있는 모듈 가져다 쓸 수 있음... !!
+import sys
+import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from database.DB import tb_insert_crawling_add_info, tb_insert_crawling_ranking, tb_insert_crawling_review,delete,item_id_select,tb_insert_crawling_size
 
@@ -28,14 +28,14 @@ chrome_options.add_argument("--log-level=3")
 # 랭킹 탑 100에 있는 이름, 랭킹, 가격 그리고 나중에 상세페이지 들어갈 때 쓰일 고유ID가져오기!!
 def crawling_ranking():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
-    url = "https://www.musinsa.com/main/musinsa/ranking?storeCode=musinsa&sectionId=199&categoryCode=000&period=MONTHLY"
+    url = "https://www.musinsa.com/main/musinsa/ranking?storeCode=musinsa&sectionId=200&categoryCode=001000&period=MONTHLY"
     driver.get(url)
 
     SCROLL_PAUSE_TIME = 3  # 로딩 대기시간
     item_ids = []  # 리스트로 변경하여 순서 유지 --> 없으면 정보를 뒤죽박죽 가져옴.
     last_height = driver.execute_script("return document.body.scrollHeight")
 
-    # 랭킹 탑100에 대한 정보 수집 (100개 수집 시 종료)
+    # 랭킹 탑100
     while True:
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
@@ -46,7 +46,6 @@ def crawling_ranking():
             if len(item_ids) >= 100:
                 break  
             try:
-                # item_id, name, price, ranking, brand
                 name = div.find('p', class_='text-body_13px_reg line-clamp-2 break-all whitespace-break-spaces text-black font-pretendard').get_text(strip=True)
                 ranking = div.find('span', class_='text-etc_11px_semibold text-black font-pretendard').get_text(strip=True)
                 price = div.find('span', class_='text-body_13px_semi sc-1m4cyao-12 fYDlTs text-black font-pretendard').get_text(strip=True)
@@ -68,7 +67,7 @@ def crawling_ranking():
             except AttributeError as e:
                 print(f"이거 외않되.. 수빈에몽 도와줭.. : {e}")
 
-        # 100개 이상 수집했으면 반복 종료
+        
         if len(item_ids) >= 100:
             break
 
@@ -120,7 +119,6 @@ def crawling_size():
 
     SCROLL_PAUSE_TIME = 0.5 
     last_height = driver.execute_script("return document.body.scrollHeight")
-
     for index, row in df_item_id.iterrows():
         url = f"https://www.musinsa.com/review/goods/{row['item_id']}"
         driver.get(url)
@@ -149,7 +147,7 @@ def crawling_size():
                         weight = elements[2].get_text(strip=True)
                         size = elements[4].get_text(strip=True)
 
-                        tb_insert_crawling_size(row['item_id'], height,weight, size)
+                        tb_insert_crawling_size(row['item_id'],gender,height,weight, size)
                         
                         print(row['item_id'],gender, height, weight, size)
 
@@ -208,8 +206,9 @@ def crawling_review():
 
 if __name__ == "__main__":
     # delete()
-    crawling_ranking()
-    crawling_add_info()
+    # crawling_ranking()
+    # crawling_add_info()
     # crawling_size()
     # crawling_review()
     pass
+
